@@ -67,7 +67,7 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
             // $outboundPartialDate =  $dd->format('Y-m-d');
             $outboundPartialDate =  $dd->format('Y-m');
         } else {
-            $outboundPartialDate = '2017-06';
+            $outboundPartialDate = '2017-12';
         }
         // $departureTime = \DateTime::createFromFormat("D M d Y",$value->QuoteDateTime);
         $propKeys = array_keys($props);
@@ -102,7 +102,7 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
             // $inboundPartialDate = $props['arrivalTime'];
 
             $response = Unirest\Request::get($url,$headers,$query);
-            dump($response);
+            // dump($response);
             $Quotes = $response->body->Quotes;
             $Places = $response->body->Places;
             // dump($Places);
@@ -157,7 +157,11 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
                 $flights[$key]->setDepartureTime($departureTime);
                 $flights[$key]->setArrivalTime($arrivalTime);
                 $provider = $value->OutboundLeg->CarrierIds; //Array
-                $flights[$key]->setProvider($carriers[$provider[0]]);
+                if (sizeof($provider)<=0) {
+                    $flights[$key]->setProvider('No direct flight!');
+                } else {
+                    $flights[$key]->setProvider($carriers[$provider[0]]);
+                }
                 $offered[$key] = new Offer();
                 $offered[$key]->setId($key);
                 $offered[$key]->setPrice($value->MinPrice);
@@ -176,7 +180,7 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
 
         // $response = Unirest\Request::post($url,$headers,$query);
         // dump($response);
-            dump($offered);
+            // dump($offered);
             return [$offered];
     }
 }
