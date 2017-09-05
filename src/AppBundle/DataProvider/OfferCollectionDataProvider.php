@@ -181,6 +181,6 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
         // $response = Unirest\Request::post($url,$headers,$query);
         // dump($response);
             // dump($offered);
-            return [$offered];
+            return $offered;
     }
 }
