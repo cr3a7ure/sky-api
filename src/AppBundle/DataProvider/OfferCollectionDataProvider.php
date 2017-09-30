@@ -83,14 +83,14 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
         }
 
         if (array_key_exists('itemOffered_arrivalTime',$props)) {
-            $da = \DateTime::createFromFormat("D M d Y",$props['itemOffered_arrivalTime']);
-            $inboundPartialDate =  $da->format('YYYY-mm-dd');
+            $da = \DateTime::createFromFormat('Y-d-m\TH:i:s.u\Z',$props['itemOffered_arrivalTime']);
+            $inboundPartialDate =  $da->format('Y-m-d');
         } else {
             $inboundPartialDate = '2017-12-10';
         }
         if (array_key_exists('itemOffered_departureTime',$props)) {
-            $dd = \DateTime::createFromFormat("D M d Y",$props['itemOffered_departureTime']);
-            $outboundPartialDate =  $dd->format('YYYY-mm-dd');
+            $dd = \DateTime::createFromFormat('Y-d-m\TH:i:s.u\Z',$props['itemOffered_departureTime']);
+            $outboundPartialDate =  $dd->format('Y-m-d');
         } else {
             $outboundPartialDate = '2017-12-20';
         }
