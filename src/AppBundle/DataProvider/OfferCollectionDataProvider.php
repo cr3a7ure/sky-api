@@ -86,13 +86,13 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
             $da = \DateTime::createFromFormat(\DateTime::W3C,$props['itemOffered_arrivalTime']);
             $inboundPartialDate =  $da->format('Y-m-d');
         } else {
-            $inboundPartialDate = '2017-12-10';
+            $inboundPartialDate = '2017-12-20';
         }
         if (array_key_exists('itemOffered_departureTime',$props)) {
             $dd = \DateTime::createFromFormat(\DateTime::W3C,$props['itemOffered_departureTime']);
             $outboundPartialDate =  $dd->format('Y-m-d');
         } else {
-            $outboundPartialDate = '2017-12-20';
+            $outboundPartialDate = '2017-12-10';
         }
         // $propKeys = array_keys($props);
 
@@ -102,12 +102,12 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
             "kind" => "qpxexpress#sliceInput",
             'origin' => $originPlace,
             'destination' => $destinationPlace,
-            'date' => $inboundPartialDate);
+            'date' => $outboundPartialDate);
         $slice[1] = array(
             "kind" => "qpxexpress#sliceInput",
             'origin' => $destinationPlace,
             'destination' => $originPlace,
-            'date' => $outboundPartialDate);
+            'date' => $inboundPartialDate);
         $passengers = array(
             "kind" => "qpxexpress#passengerCounts",
             'adultCount' => 1,
