@@ -126,6 +126,7 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
             dump($body);
             $googleResponse = Unirest\Request::post($googleURL,$headers,$body);
             dump($googleResponse);
+            $offered = array();
             if ($googleResponse->code === 200){
                 $quotes = $googleResponse->body->trips->tripOption;
                 $tripData = $googleResponse->body->trips->data;
@@ -249,7 +250,6 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
                 }
 
                 $flights = array();
-                $offered = array();
                 // throw new \Exception('DUMPSTERRRRR!');
                 $Currencies = $response->body->Currencies;
                 $defCurr = $Currencies[0]->Code;
