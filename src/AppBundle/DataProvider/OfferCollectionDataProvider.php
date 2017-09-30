@@ -282,6 +282,7 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
                     $offered[$key]->setItemOffered($flights[$key]);
                     // $flights[$key]->setOffers($offered[$key]);
                 }
+                dump($offered);
             }
 
         return $offered;
