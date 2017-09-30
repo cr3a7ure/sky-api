@@ -274,4 +274,4 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
 
         return $offered;
     }
-// }
+}
