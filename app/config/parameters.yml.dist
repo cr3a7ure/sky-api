@@ -19,3 +19,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     cors_allow_origin: http://localhost
+    skyscanner_key: skyscannerKeyOnlyQuotedPrices4Free
+    googleQPX_key: googleQPXApiKeyaaaaaaaaaaaaaaaaaaaa

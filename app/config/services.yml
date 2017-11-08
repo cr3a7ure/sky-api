@@ -15,18 +15,10 @@ services:
         arguments: [ { departureAirport: "exact", arrivalAirport.id: "exact",departureTime: "exact",arrivalTime: "partial"  } ]
         tags:      [ { name: 'api_platform.filter', id: 'flight.search' } ]
 
-
-    # flight.collection_data_provider:
-    #     class: 'AppBundle\DataProvider\FlightCollectionDataProvider'
-    #     arguments: ["@request_stack"]
-    #     tags:
-    #         -  { name: 'api_platform.collection_data_provider', priority: 2 }
-
     airport.search_filter:
         parent:    "api_platform.doctrine.orm.search_filter"
         arguments: [ { iataCode: "exact", address.addressCountry: "partial",address.addressLocality: "partial"  } ]
         tags:      [ { name: 'api_platform.filter', id: 'airport.search' } ]
-
 
     airport.collection_data_provider:
         class: 'AppBundle\DataProvider\AirportCollectionDataProvider'
@@ -39,42 +31,8 @@ services:
         arguments: [ { itemOffered.departureAirport.iataCode: "partial", itemOffered.arrivalAirport.iataCode: "partial",itemOffered.departureTime: "partial",itemOffered.arrivalTime: "partial", price: "exact"  } ]
         tags:      [ { name: 'api_platform.filter', id: 'offer.search' } ]
 
-    # offer.numeric_filter:
-    #     parent:    'api_platform.doctrine.orm.range_filter'
-    #     arguments: [ { price: ~ } ]
-    #     tags:      [ { name: 'api_platform.filter', id: 'offer.range' } ]
-
-
-
     offer.collection_data_provider:
         class: 'AppBundle\DataProvider\OfferCollectionDataProvider'
-        arguments: ["@request_stack","@doctrine"]
+        arguments: ["@request_stack","@doctrine", "%skyscanner_key%","%googleQPX_key%"]
         tags:
             -  { name: 'api_platform.collection_data_provider', priority: 2 }
-
-    # a_p_i_reference.collection_data_provider:
-    #     class: 'AppBundle\DataProvider\ApiCollectionDataProvider'
-    #     arguments: ["@request_stack"]
-    #     tags:
-    #         -  { name: 'api_platform.collection_data_provider', priority: 2 }
-
-# de xreiasthke
-    # action_api_ref_action:
-    #     class:     AppBundle\Action\ApiRefAction
-    #     arguments: ["@request_stack"]
-
-
-    # api_ref.collection_data_provider:
-    #     class: 'AppBundle\DataProvider\ApiCollectionDataProvider'
-    #     arguments: ["@request_stack"]
-    #     tags:
-    #         -  { name: 'api_platform.collection_data_provider', priority: 1 }
-
-    # geo_coordinates.custom_geo_filter:
-    #     class: 'AppBundle\Filter\CustomGeoFilter'
-    #     tags:  [ { name: 'api_platform.filter', id: 'geo_coordinates.geo' } ]
-
-#    offer.order_filter:
-#        parent:    "api_platform.doctrine.orm.order_filter"
-#        arguments: [ { "price": "ASC" } ]
-

@@ -43,7 +43,7 @@ final class GeoCoordinatesCollectionDataProvider implements CollectionDataProvid
         $geoC->setLatitude(null);
         $geoC->setLongitude(null);
 
-        $gmapsApiKey = 'AIzaSyDzVG8kyjhNB-y8wpRk_6KCl-DtQFPsTQw';
+        $gmapsApiKey = 'AIzaSyDzVG8kyjhNB-qwe-DtQFPsTQw';
 
         $request = $this->requestStack->getCurrentRequest();
         // $test = $request->query;//->get('');
@@ -86,54 +86,6 @@ final class GeoCoordinatesCollectionDataProvider implements CollectionDataProvid
         } else {
             return [$geoC];
         }
-
-        // $response = Unirest\Request::get('https://maps.googleapis.com/maps/api/geocode/json',$headers,$query);
-        // $responseResults = $response->body->results;
-        // dump($responseResults[0]->formatted_address);
-
-//"CV-110, 12317 Herbés, Castellón, Spain"
-
-// $response = Unirest\Request::post('http://mockbin.com/request', $headers, $query);
-
-//       $response->code;        // HTTP Status code
-//       $response->headers;     // Headers
-//       $response->body;        // Parsed body
-//       $response->raw_body;    // Unparsed body
-
-// formatted_address
-// Display the result
-// dump();
-// dump($response->body);
-// $array = array(
-// "title" => "Harry Potter and the Prisoner of Azkaban",
-// "author" => "J. K. Rowling",
-// "publisher" => "Arthur A. Levine Books",
-// "amazon_link" => "http://www.amazon.com/dp/0439136369/"
-// );
-
-// $postal = new PostalAddress();
-// $postal->setId(2);
-
-// $postal = "\1";
-// $postal->getId(1);
-// $books = (object) $array;
-
-// new GeoCoordinates(1) = (object)array(
-//   'id' => 1,
-//   'address' =>"skataa",
-//   'latitude' => 40.714224,
-//   'longitude' => -73.961452
-//   )
-
-
-
-        // var_dump(key($troll[0])); //get the 
-        // dump($response);
-        // dump($postal);
-        // if ($props!=null) {
-        //     return null;
-        // } else {
             return [$geoC];
-        // }
     }
 }

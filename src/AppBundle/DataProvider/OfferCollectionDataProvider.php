@@ -20,10 +20,14 @@ use Unirest;
 final class OfferCollectionDataProvider implements CollectionDataProviderInterface
 {
   protected $requestStack;
+  protected $skyscannerKey;
+  protected $googleQPXKey;
 
-  public function __construct(RequestStack $requestStack)
+  public function __construct(RequestStack $requestStack, $reg, $skyscannerKey, $googleQPXKey)
     {
         $this->requestStack = $requestStack;
+        $this->skyscannerKey = $skyscannerKey;
+        $this->googleQPXKey = $googleQPXKey;
     }
 
     protected function getCarrierName(array $carriers,string $code) {
@@ -63,10 +67,9 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
             throw new ResourceClassNotSupportedException();
         }
 
-        $skyscannerKey = 'un875336557978775954531833342497';
-        $googleQPXKey = 'AIzaSyCH14oiphFMQ2Tx6qzP8bAIH781kmWtAsw';
-        // https://developers.google.com/qpx-express/v1/trips/search
-        $googleURL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyCH14oiphFMQ2Tx6qzP8bAIH781kmWtAsw';//+$googleQPXKey;
+        $skyscannerKey = $this->skyscannerKey;
+        $googleQPXKey = $this->googleQPXKey;
+        $googleURL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key='.$googleQPXKey;
 
         $request = $this->requestStack->getCurrentRequest();
         $props = $request->query->all();
@@ -120,9 +123,7 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
         $headers = array('Accept' => 'application/json',"Content-Type" => "application/json");
         $googleReq = array('request'=>$flight);
         $body = Unirest\Request\Body::json($googleReq);
-        dump($body);
         $googleResponse = Unirest\Request::post($googleURL,$headers,$body);
-        dump($googleResponse);
         $offered = array();
         if ($googleResponse->code === 200){
             $quotes = $googleResponse->body->trips->tripOption;
@@ -165,7 +166,6 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
                     $arrivalTime = \DateTime::createFromFormat('Y-m-d\TH:iP',$flightLeg->departureTime);
                     $retCarrier = $this->getCarrierName($carrierArray,$retValue->flight->carrier);
                     $destination = $this->getAirport($airports,$flightLeg->origin);
-                    dump($destination);
                 // }
 
                 $flights[$key] = new Flight();
@@ -211,10 +211,8 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
             $inboundPartialDate = '';
             $url = 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/'.$marketCountry.'/'.$currency.'/'.$locale.'/'.$originPlace.'/'.$destinationPlace.'/'.$outboundPartialDate.'/'.$inboundPartialDate;
             $response = Unirest\Request::get($url,$headers,$query);
-            dump($response);
             $Quotes = $response->body->Quotes;
             $Places = $response->body->Places;
-            dump($Quotes);
             $Carriers = $response->body->Carriers;
             $carriers =  array();
             foreach ($Carriers as $key => $value) {
@@ -244,7 +242,6 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
                     $places[$value->PlaceId][$key2] = $value2;
                 }
             }
-            dump($airports);
             $flights = array();
             // throw new \Exception('DUMPSTERRRRR!');
             $Currencies = $response->body->Currencies;
@@ -278,7 +275,6 @@ final class OfferCollectionDataProvider implements CollectionDataProviderInterfa
                 $offered[$key]->setItemOffered($flights[$key]);
                 // $flights[$key]->setOffers($offered[$key]);
             }
-            dump($offered);
         }
 
         return $offered;

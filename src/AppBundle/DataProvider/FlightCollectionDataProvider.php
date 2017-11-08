@@ -31,9 +31,6 @@ final class FlightCollectionDataProvider implements CollectionDataProviderInterf
             throw new ResourceClassNotSupportedException();
         }
         //Temp Objects
-
-        $skyscannerKey = 'un875336557978775954531833342497';
-
         $request = $this->requestStack->getCurrentRequest();
         // $test = $request->query;//->get('');
         $props = $request->query->all();
